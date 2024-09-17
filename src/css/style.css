@@ -1,6 +1,5 @@
 :root {
   --color-primary: #e29a5a;
-  --color-secondary: #58c5e4;
 
   --color-grey-light-1: #f9f5f3; /* Light background */
   --color-grey-light-2: #f2efee; /* Light lines */
@@ -27,6 +26,7 @@ html {
 
 body {
   font-family: "Nunito Sans", sans-serif;
+  background-color: var(--color-grey-light-1);
   font-weight: 400;
   line-height: 1.6;
 }
@@ -145,4 +145,145 @@ body {
   height: 2.25rem;
   width: 2.25rem;
   fill: currentColor;
+}
+
+.search-results {
+  padding: 3rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.results {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+.pagination {
+  margin-top: auto;
+  padding: 0 3.5rem;
+}
+
+.pagination::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.pagination__btn--prev {
+  float: left;
+}
+
+.pagination__btn--next {
+  float: right;
+}
+
+.preview__link:link,
+.preview__link:visited {
+  display: flex;
+  align-items: center;
+  padding: 2rem 3rem;
+  transition: all 0.2s;
+  border-right: 1px solid #fff;
+  text-decoration: none;
+}
+
+.preview__link:hover {
+  background-color: var(--color-grey-light-2);
+  transform: translateY(-3px);
+}
+
+.preview__link--active {
+  background-color: var(--color-grey-light-2);
+}
+
+.preview__fig {
+  flex: 0 0 6rem;
+  border-radius: 50%;
+  overflow: hidden;
+  height: 6rem;
+  margin-right: 2rem;
+  position: relative;
+  backface-visibility: hidden;
+}
+
+.preview__fig::before {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-grey-light-2);
+  opacity: 0.4;
+}
+
+.preview__fig img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s;
+}
+
+.preview__data {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 2rem;
+  row-gap: 0.1rem;
+  align-items: center;
+}
+
+.preview__title {
+  grid-column: 1/-1;
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  max-width: 25rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.preview__publisher {
+  font-size: 1.1rem;
+  color: var(--color-grey-dark-2);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.btn--inline {
+  color: var(--color-primary);
+  font-size: 1.4rem;
+  font-weight: 600;
+  border: none;
+  background-color: var(--color-grey-light-1);
+  padding: 0.8rem 1.2rem;
+  border-radius: 10rem;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.btn--inline svg {
+  height: 1.6rem;
+  width: 1.6rem;
+  fill: currentColor;
+  margin: 0 0.2rem;
+}
+
+.btn--inline span {
+  margin: 0 0.2rem;
+}
+
+.btn--inline:hover {
+  transform: scale(1.05);
+  background-color: var(--color-grey-light-2);
+}
+
+.btn--inline:focus {
+  outline: none;
 }
