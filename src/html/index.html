@@ -4,11 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="icon" href="../img/recipe-book-icon.svg" type="image/svg" />
+    <link rel="icon" href="../img/recipe-book-icon.png" type="image/png" />
+
     <title>Recipe book</title>
   </head>
   <body>
-    <!-- Your content here -->
-    <div class="test">test</div>
+    <div class="container">
+      <header class="header">
+        <!-- LOGO -->
+        <svg class="header__logo" alt="recipe book">
+          <use href="../img/icons.svg#recipe-book-icon" />
+        </svg>
+        <!-- SEARCH -->
+        <form class="search">
+          <input
+            type="text"
+            class="search__field"
+            placeholder="Search recipes..."
+          />
+          <button class="btn search__btn">
+            <svg class="search__icon">
+              <use href="../img/icons.svg#search-icon"></use>
+            </svg>
+            <span>Search</span>
+          </button>
+        </form>
+        <!-- NAV -->
+        <nav class="nav">
+          <ul class="nav__list">
+            <li class="nav__list__item">
+              <button class="nav__btn nav__btn--categories">
+                <span>Categories</span>
+              </button>
+            </li>
+            <li class="nav__list__item">
+              <button class="nav__btn nav__btn--bookmarks">
+                <span>Bookmarks</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </header>
+    </div>
   </body>
 </html>
