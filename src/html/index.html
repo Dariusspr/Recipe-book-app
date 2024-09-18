@@ -8,59 +8,61 @@
     <title>Recipe book</title>
   </head>
   <body>
-    <div class="container">
-      <header class="header">
-        <!-- LOGO -->
-        <svg class="header__logo">
-          <title>Recipe Book</title>
-          <use href="../img/icons.svg#recipe-book-icon"></use>
-        </svg>
-        <!-- SEARCH -->
-        <form class="search">
-          <input
-            type="text"
-            class="search__field"
-            placeholder="Search recipes..."
-          />
-          <button class="btn search__btn">
-            <svg class="search__icon">
-              <title>Search Icon</title>
-              <use href="../img/icons.svg#search-icon"></use>
-            </svg>
-            <span>Search</span>
-          </button>
-        </form>
-        <!-- NAV -->
-        <nav class="nav">
-          <ul class="nav__list">
-            <li class="nav__list__item">
-              <button class="nav__btn nav__btn--categories">
-                <span>Categories</span>
-              </button>
-            </li>
-            <li class="nav__list__item">
-              <button class="nav__btn nav__btn--bookmarks">
-                <span>Bookmarks</span>
-              </button>
-            </li>
-          </ul>
-        </nav>
-      </header>
+    <header class="header">
+      <!-- LOGO -->
+      <svg class="header__logo">
+        <title>Recipe Book</title>
+        <use href="../img/icons.svg#recipe-book-icon"></use>
+      </svg>
+      <!-- SEARCH -->
+      <form class="search">
+        <input
+          type="text"
+          class="search__field"
+          placeholder="Search recipes..."
+        />
+        <button class="btn search__btn">
+          <svg class="search__icon">
+            <title>Search Icon</title>
+            <use href="../img/icons.svg#search-icon"></use>
+          </svg>
+          <span>Search</span>
+        </button>
+      </form>
+      <!-- NAV -->
+      <nav class="nav">
+        <ul class="nav__list">
+          <li class="nav__list__item">
+            <button class="nav__btn nav__btn--categories">
+              <span>Categories</span>
+            </button>
+          </li>
+          <li class="nav__list__item">
+            <button class="nav__btn nav__btn--bookmarks">
+              <span>Bookmarks</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
-      <main>
+    <div class="container">
+      <div class="left">
         <div class="search-results">
           <ul class="results">
-            <li class="preview">
-              <a class="preview__link preview__link--active" href="#23456">
+      
+
+      <li class="preview"></li>
+              <a class="preview__link" href="#23457">
                 <figure class="preview__fig">
                   <img
-                    src="https://t3.ftcdn.net/jpg/00/27/57/96/360_F_27579652_tM7V4fZBBw8RLmZo0Bi8WhtO2EosTRFD.jpg"
+                    src="https://www.themealdb.com/images/media/meals/x0lk931587671540.jpg"
                     alt="Test"
                   />
                 </figure>
                 <div class="preview__data">
-                  <h4 class="preview__title">Pizza ...</h4>
-                  <p class="preview__publisher">Someone</p>
+                  <h4 class="preview__title">Pizza Express Margherita</h4>
+                  <p class="preview__category">Miscellaneous</p>
                 </div>
               </a>
             </li>
@@ -69,21 +71,20 @@
               <a class="preview__link" href="#23457">
                 <figure class="preview__fig">
                   <img
-                    src="https://t3.ftcdn.net/jpg/00/27/57/96/360_F_27579652_tM7V4fZBBw8RLmZo0Bi8WhtO2EosTRFD.jpg"
+                    src="https://www.themealdb.com/images/media/meals/x0lk931587671540.jpg"
                     alt="Test"
                   />
                 </figure>
                 <div class="preview__data">
-                  <h4 class="preview__title">Pizza ...</h4>
-                  <p class="preview__publisher">Someone</p>
+                  <h4 class="preview__title">Pizza Express Margherita</h4>
+                  <p class="preview__category">Miscellaneous</p>
                 </div>
               </a>
             </li>
           </ul>
         </div>
 
-
-        <div class="pagination"></div>
+        <div class="pagination">
           <button class="btn--inline pagination__btn--prev">
             <svg class="search__icon">
               <use href="../img/icons.svg#left-icon"></use>
@@ -97,8 +98,81 @@
             </svg>
           </button>
         </div>
+      </div>
+      <div class="right">
+        <div class="recipe">
+          <figure class="recipe__fig">
+            <img
+              src="https://t3.ftcdn.net/jpg/00/27/57/96/360_F_27579652_tM7V4fZBBw8RLmZo0Bi8WhtO2EosTRFD.jpg"
+              alt="Test"
+              class="recipe__img"
+            />
+            <h1 class="recipe__title">
+              <span>Pizza Express Margherita</span>
+            </h1>
+          </figure>
 
-      </main>
+          <div class="recipe__details">
+            <div class="recipe__ingredients">
+              <h2 class="heading--2">Recipe ingredients</h2>
+              <ul class="recipe__ingredient-list">
+                <li class="recipe__ingredient">
+                  <svg class="recipe__icon">
+                    <use href="../img/icons.svg#list-marker-icon"></use>
+                  </svg>
+                  <div class="recipe__quantity">1</div>
+                  <div class="recipe__description">
+                    <span class="recipe__unit">tsp</span>
+                    Sugar
+                  </div>
+                </li>
+
+                <li class="recipe__ingredient">
+                  <svg class="recipe__icon">
+                    <use href="../img/icons.svg#list-marker-icon"></use>
+                  </svg>
+                  <div class="recipe__quantity">150</div>
+                  <div class="recipe__description">
+                    <span class="recipe__unit">ml</span>
+                    Water
+                  </div>
+                </li>
+
+                <li class="recipe__ingredient">
+                  <svg class="recipe__icon">
+                    <use href="../img/icons.svg#list-marker-icon"></use>
+                  </svg>
+                  <div class="recipe__quantity">15</div>
+                  <div class="recipe__description">
+                    <span class="recipe__unit">g</span>
+                    Yeast
+                  </div>
+                </li>
+
+                <li class="recipe__ingredient">
+                  <svg class="recipe__icon">
+                    <use href="../img/icons.svg#list-marker-icon"></use>
+                  </svg>
+                  <div class="recipe__quantity">225</div>
+                  <div class="recipe__description">
+                    <span class="recipe__unit">g</span>
+                    Plain Flour
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="recipe__directions">
+              <h2 class="heading--2">How to cook it</h2>
+  <p class="recipe__directions-text">
+            This recipe was published by
+            <a href="http://goole.com"class="recipe__publisher" target="_blank">Test</a>
+    For full details, visit their website.         
+ </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
