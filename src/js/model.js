@@ -75,7 +75,6 @@ export async function searchRecipes(q) {
     }
 
     updateState(url, data);
-    console.log(state);
   } catch (err) {
     throw err;
   }
