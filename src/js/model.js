@@ -44,9 +44,18 @@ function updateState(url, data) {
       source_url: recipe.url,
       image: recipe.images.REGULAR.url,
       recipe_url: _links.self.href,
+      id: getId(_links.self.href),
     };
     state.searchResults.push(result);
   });
+}
+
+function getId(link) {
+  const start = link.lastIndexOf("/") + 1;
+  const end =
+    link.indexOf("?", start) === -1 ? link.length : link.indexOf("?", start);
+  const id = link.substring(start, end);
+  return id;
 }
 
 export async function searchRecipes(q) {
