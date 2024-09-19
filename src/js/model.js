@@ -10,6 +10,7 @@ export const state = {
   currentPage: 1,
   totalSearchResultsCount: 0,
   itemsPerPage: RECIPES_PER_PAGE,
+  query: "",
   currentSearchPageUrl: "",
   nextSearchPageUrl: "",
 };
