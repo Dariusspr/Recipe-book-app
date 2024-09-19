@@ -1,4 +1,4 @@
 import "../css/style.css";
-import { test } from "./model.js";
+import * as Model from "./model";
 
-// test();
+// await Model.searchRecipes("pizza");
