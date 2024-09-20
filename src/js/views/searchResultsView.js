@@ -15,10 +15,11 @@ class SearchResultsView {
   }
 
   #createHtmlElements() {
-    return this.#data.map(
-      (elem) =>
-        `<li class="preview"></li>
-              <a class="preview__link" href="#${elem.id}">
+    return this.#data.map((elem) => {
+      const id = window.location.hash.slice(1);
+      const selected = id === elem.id ? "preview__link--active" : "";
+      return `<li class="preview"></li>
+              <a class="preview__link ${selected}" href="#${elem.id}">
                 <figure class="preview__fig">
                   <img
                     src="${elem.image}"
@@ -30,8 +31,8 @@ class SearchResultsView {
                   <p class="preview__category">${elem.type}</p>
                 </div>
               </a>
-            </li>`
-    );
+            </li>`;
+    });
   }
 
   #clear() {

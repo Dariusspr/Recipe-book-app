@@ -1,0 +1,79 @@
+class RecipeView {
+  #parentElement = document.querySelector(".recipe");
+  #html;
+  render(recipe) {
+    if (!recipe) return;
+    console.log(recipe);
+    this.#clear();
+    this.#addFigure(recipe.image, recipe.label);
+    this.#addDetails(recipe);
+
+    this.#parentElement.insertAdjacentHTML("afterbegin", this.#html);
+  }
+
+  #addFigure(img, label) {
+    this.#html = `<figure class="recipe__fig">
+            <img
+              src="${img}"
+              alt="Test"
+              class="recipe__img"
+            />
+            <h1 class="recipe__title">
+              <span>${label}</span>
+            </h1>
+          </figure>`;
+  }
+
+  #addDetails(recipe) {
+    this.#html += `
+          <div class="recipe__details">
+            <div class="recipe__ingredients">
+              <h2 class="heading--2">Recipe ingredients</h2>
+              <ul class="recipe__ingredient-list">
+                ${this.#addIngredients(recipe.ingredients).join("")}
+              </ul>
+            </div>
+
+            <div class="recipe__directions">
+              <h2 class="heading--2">How to cook it</h2>
+  <p class="recipe__directions-text">
+            This recipe was published by
+            <a href="${
+              recipe.source_url
+            }"class="recipe__publisher" target="_blank">${recipe.source}</a>
+    For full details, visit their website.         
+ </p>
+            </div>
+          </div>
+    `;
+  }
+
+  #addIngredients(ingredients) {
+    return ingredients.map(
+      (ingredient) => `
+            <li class="recipe__ingredient">
+                <div class="recipe__quantity">${
+                  !ingredient.quantity ? "" : ingredient.quantity
+                }</div>
+                <div class="recipe__description">
+                  <span class="recipe__unit">${
+                    !ingredient.measure ? "" : ingredient.measure
+                  }</span>
+                  ${ingredient.food}
+                </div>
+            </li>`
+    );
+  }
+  #clear() {
+    this.#parentElement.innerHTML = "";
+  }
+
+  addSelectListener(listener) {
+    window.addEventListener("hashchange", (e) => {
+      e.preventDefault();
+      listener();
+    });
+  }
+}
+
+export default new RecipeView();

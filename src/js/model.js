@@ -10,6 +10,7 @@ export const state = {
   currentPage: 1,
   totalSearchResultsCount: 0,
   itemsPerPage: RECIPES_PER_PAGE,
+  selectedRecipe: null,
   query: "",
   currentSearchPageUrl: "",
   nextSearchPageUrl: "",
@@ -78,6 +79,10 @@ export async function searchRecipes(q) {
   } catch (err) {
     throw err;
   }
+}
+
+export function selectRecipe(id) {
+  state.selectedRecipe = state.searchResults.find((res) => res.id === id);
 }
 
 function resetState() {
