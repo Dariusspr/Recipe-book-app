@@ -29,6 +29,13 @@ module.exports = {
         test: /\.html$/,
         use: ["html-loader"],
       },
+      {
+        test: /\.(ico|png|jp?g|svg)/,
+        type: "asset/resource",
+        generator: {
+          filename: "img/[name].[hash:8][ext]",
+        },
+      },
     ],
   },
   plugins: [

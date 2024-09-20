@@ -1,3 +1,4 @@
+import icons from "../../img/icons.svg";
 class RecipeView {
   #parentElement = document.querySelector(".recipe");
   #html;
@@ -52,6 +53,9 @@ class RecipeView {
     return ingredients.map(
       (ingredient) => `
             <li class="recipe__ingredient">
+                <svg class="recipe__icon">
+                    <use href="${icons}#list-marker-icon"></use>
+                  </svg>
                 <div class="recipe__quantity">${
                   !ingredient.quantity ? "" : ingredient.quantity
                 }</div>

@@ -7,6 +7,7 @@ import {
 
 export const state = {
   searchResults: [],
+  currentSearchResults: [],
   currentPage: 1,
   totalSearchResultsCount: 0,
   itemsPerPage: RECIPES_PER_PAGE,
@@ -25,7 +26,63 @@ async function fetchJSON(url) {
     const json = await response.json();
     return json;
   } catch (err) {
+    console.log(err);
+
     console.error(err);
+    throw err;
+  }
+}
+
+export async function searchRecipes(q) {
+  try {
+    resetState();
+    let url = new URL(API_URL);
+    url.search = new URLSearchParams({
+      type: "public",
+      q,
+      app_id: API_APP_ID,
+      app_key: APP_APP_KEY,
+    });
+    const data = await fetchJSON(url);
+    if (!data || (data instanceof Array && data.length === 0)) {
+      console.info("No search results");
+      return;
+    }
+
+    updateState(url, data);
+    loadSearchResultsPage();
+  } catch (err) {
+    console.log(err);
+
+    throw err;
+  }
+}
+
+async function fetchNextPage() {
+  try {
+    const url = state.nextSearchPageUrl;
+    const data = await fetchJSON(url);
+    updateState(url, data);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+export function selectRecipe(id) {
+  state.selectedRecipe = state.searchResults.find((res) => res.id === id);
+}
+
+export async function selectSearchResultsPage(page) {
+  try {
+    const currentPageCount = Math.ceil(
+      state.searchResults.length / state.itemsPerPage
+    );
+    if (page >= currentPageCount && page < state.totalSearchResultsCount) {
+      await fetchNextPage();
+    }
+    loadSearchResultsPage(page);
+  } catch (err) {
     throw err;
   }
 }
@@ -59,34 +116,17 @@ function getId(link) {
   return id;
 }
 
-export async function searchRecipes(q) {
-  try {
-    resetState();
-    let url = new URL(API_URL);
-    url.search = new URLSearchParams({
-      type: "public",
-      q,
-      app_id: API_APP_ID,
-      app_key: APP_APP_KEY,
-    });
-    const data = await fetchJSON(url);
-    if (!data || (data instanceof Array && data.length === 0)) {
-      console.info("No search results");
-      return;
-    }
-
-    updateState(url, data);
-  } catch (err) {
-    throw err;
-  }
-}
-
-export function selectRecipe(id) {
-  state.selectedRecipe = state.searchResults.find((res) => res.id === id);
+function loadSearchResultsPage(page = 1) {
+  state.currentPage = page;
+  const start = (page - 1) * state.itemsPerPage;
+  const end = start + state.itemsPerPage;
+  state.currentSearchResults = state.searchResults.slice(start, end);
 }
 
 function resetState() {
   state.searchResults = [];
+  state.currentSearchResults = [];
+  state.selectedRecipe = null;
   state.currentPage = 1;
   state.totalSearchResultsCount = 0;
   state.currentSearchPageUrl = "";
