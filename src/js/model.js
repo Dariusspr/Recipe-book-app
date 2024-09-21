@@ -69,8 +69,12 @@ async function fetchNextPage() {
   }
 }
 
-export function selectRecipe(id) {
-  state.selectedRecipe = state.searchResults.find((res) => res.id === id);
+export function selectRecipe(id = null) {
+  if (!id) {
+    selectFirstRecipeOnPage();
+  } else {
+    state.selectedRecipe = state.searchResults.find((res) => res.id === id);
+  }
 }
 
 export async function selectSearchResultsPage(page) {
@@ -102,13 +106,13 @@ function updateState(url, data) {
       source_url: recipe.url,
       image: recipe.images.REGULAR.url,
       recipe_url: _links.self.href,
-      id: getId(_links.self.href),
+      id: extractIdFromLink(_links.self.href),
     };
     state.searchResults.push(result);
   });
 }
 
-function getId(link) {
+function extractIdFromLink(link) {
   const start = link.lastIndexOf("/") + 1;
   const end =
     link.indexOf("?", start) === -1 ? link.length : link.indexOf("?", start);
@@ -121,6 +125,12 @@ function loadSearchResultsPage(page = 1) {
   const start = (page - 1) * state.itemsPerPage;
   const end = start + state.itemsPerPage;
   state.currentSearchResults = state.searchResults.slice(start, end);
+}
+
+function selectFirstRecipeOnPage() {
+  const recipeIndex = state.itemsPerPage * (state.currentPage - 1);
+  state.selectedRecipe = state.searchResults.at(recipeIndex);
+  window.location.hash = state.selectedRecipe.id;
 }
 
 function resetState() {

@@ -10,7 +10,9 @@ async function controlSearch() {
   if (!query) return;
   Model.state.query = query;
 
-  await Model.searchRecipes(query);
+  RecipeView.renderLoadingAnimation();
+
+  await Model.searchRecipes(Model.state.query);
 
   SearchResultsView.render(Model.state.currentSearchResults);
 
@@ -18,6 +20,8 @@ async function controlSearch() {
     Model.state.currentPage,
     Math.ceil(Model.state.totalSearchResultsCount / Model.state.itemsPerPage)
   );
+
+  selectAndRenderRecipe();
 }
 
 async function controlRecipe() {
@@ -25,12 +29,13 @@ async function controlRecipe() {
   if (!id) return;
 
   SearchResultsView.render(Model.state.currentSearchResults);
-  Model.selectRecipe(id);
 
-  RecipeView.render(Model.state.selectedRecipe);
+  selectAndRenderRecipe(id);
 }
 
 async function controlPagination(page) {
+  RecipeView.renderLoadingAnimation();
+
   await Model.selectSearchResultsPage(page);
 
   SearchResultsView.render(Model.state.currentSearchResults);
@@ -39,6 +44,13 @@ async function controlPagination(page) {
     Model.state.currentPage,
     Math.ceil(Model.state.totalSearchResultsCount / Model.state.itemsPerPage)
   );
+
+  selectAndRenderRecipe();
+}
+
+function selectAndRenderRecipe(id) {
+  Model.selectRecipe(id);
+  RecipeView.render(Model.state.selectedRecipe);
 }
 
 function init() {

@@ -72,6 +72,16 @@ class RecipeView {
     this.#parentElement.innerHTML = "";
   }
 
+  renderLoadingAnimation() {
+    this.#clear();
+    this.#html = `<div class="spinner">
+            <svg>
+              <use href="${icons}#icon-loader"></use>
+            </svg>
+          </div>`;
+    this.#parentElement.insertAdjacentHTML("afterbegin", this.#html);
+  }
+
   addSelectListener(listener) {
     window.addEventListener("hashchange", (e) => {
       e.preventDefault();
