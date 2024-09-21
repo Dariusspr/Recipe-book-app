@@ -1,9 +1,4 @@
-import {
-  API_URL,
-  API_APP_ID,
-  APP_APP_KEY,
-  RECIPES_PER_PAGE,
-} from "./constants";
+import { RECIPES_PER_PAGE } from "./constants";
 
 export const state = {
   searchResults: [],
@@ -36,12 +31,12 @@ async function fetchJSON(url) {
 export async function searchRecipes(q) {
   try {
     resetState();
-    let url = new URL(API_URL);
+    let url = new URL(process.env.API_URL);
     url.search = new URLSearchParams({
       type: "public",
       q,
-      app_id: API_APP_ID,
-      app_key: APP_APP_KEY,
+      app_id: process.env.API_ID,
+      app_key: process.env.API_KEY,
     });
     const data = await fetchJSON(url);
     if (!data || (data instanceof Array && data.length === 0)) {
