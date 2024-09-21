@@ -4,6 +4,7 @@ import SearchView from "./views/searchView";
 import SearchResultsView from "./views/searchResultsView";
 import RecipeView from "./views/recipeView";
 import PaginationView from "./views/paginationView";
+import BookmarkView from "./views/bookmarkView";
 
 async function controlSearch() {
   try {
@@ -63,9 +64,21 @@ function selectAndRenderRecipe(id) {
   RecipeView.render(Model.state.selectedRecipe);
 }
 
+function controlBookmarks() {
+  if (!Model.state.selectedRecipe.bookmarked) {
+    Model.addBookmark();
+  } else {
+    Model.removeBookmark();
+  }
+  RecipeView.render(Model.state.selectedRecipe);
+  BookmarkView.update(Model.state.bookmarks);
+}
+
 function init() {
   SearchView.addSearchListener(controlSearch);
   RecipeView.addSelectListener(controlRecipe);
+  RecipeView.addBookmarkListener(controlBookmarks);
   PaginationView.addPaginationListener(controlPagination);
+  BookmarkView.update(Model.state.bookmarks);
 }
 init();

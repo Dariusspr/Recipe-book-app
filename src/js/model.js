@@ -10,6 +10,7 @@ export const state = {
   query: "",
   currentSearchPageUrl: "",
   nextSearchPageUrl: "",
+  bookmarks: [],
 };
 
 async function fetchJSON(url) {
@@ -81,6 +82,18 @@ export async function selectSearchResultsPage(page) {
   }
 }
 
+export function addBookmark() {
+  state.bookmarks.push(state.selectedRecipe);
+  state.selectedRecipe.bookmarked = true;
+}
+
+export function removeBookmark() {
+  state.bookmarks = state.bookmarks.filter(
+    (e) => e.id !== state.selectedRecipe.id
+  );
+  state.selectedRecipe.bookmarked = false;
+}
+
 function updateState(url, data) {
   state.currentSearchPageUrl = url;
   state.nextSearchPageUrl = data._links.next?.href;
@@ -98,6 +111,10 @@ function updateState(url, data) {
       recipe_url: _links.self.href,
       id: extractIdFromLink(_links.self.href),
     };
+
+    if (state.bookmarks.some((e) => e.id === result.id))
+      result.bookmarked = true;
+
     state.searchResults.push(result);
   });
 }

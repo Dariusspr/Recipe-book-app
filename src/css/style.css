@@ -29,10 +29,10 @@ body {
   background-color: var(--color-grey-light-1);
   font-weight: 400;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 .container {
-  overflow: hidden;
   display: flex;
   justify-content: space-between;
   width: 120rem;
@@ -444,4 +444,66 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+.btn--round {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: var(--color-grey-light-3);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  height: 6rem;
+  width: 6rem;
+  transition: all 0.2s;
+}
+
+.btn--round:hover {
+  transform: scale(1.05);
+}
+.btn--round svg {
+  height: 4rem;
+  width: 4rem;
+  fill: #fff;
+}
+
+.bookmark--active {
+  background-color: var(--color-primary);
+}
+
+.bookmarks {
+  padding: 1rem 0;
+  position: absolute;
+  right: -2.5rem;
+  z-index: 10;
+  width: 40rem;
+  background-color: #fff;
+
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s 0.2s;
+}
+
+.bookmarks__list {
+  list-style: none;
+}
+
+.bookmarks__field {
+  cursor: pointer;
+  padding: 0 4rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  transition: all 0.3s;
+}
+
+.bookmarks__field:hover {
+  background-color: var(--color-grey-light-1);
+}
+
+.bookmarks:hover,
+.nav__btn--bookmarks:hover + .bookmarks {
+  visibility: visible;
+  opacity: 1;
 }

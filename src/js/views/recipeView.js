@@ -6,19 +6,26 @@ class RecipeView {
     if (!recipe) return;
     console.log(recipe);
     this.#clear();
-    this.#addFigure(recipe.image, recipe.label);
+    this.#addFigure(recipe.bookmarked, recipe.image, recipe.label);
     this.#addDetails(recipe);
 
     this.#parentElement.insertAdjacentHTML("afterbegin", this.#html);
   }
 
-  #addFigure(img, label) {
+  #addFigure(bookmarked, img, label) {
     this.#html = `<figure class="recipe__fig">
             <img
               src="${img}"
               alt="Test"
               class="recipe__img"
             />
+        <button class="bookmark btn--round ${
+          bookmarked ? "bookmark--active" : ""
+        }">
+            <svg>
+              <use href="${icons}#bookmark-icon"></use>
+            </svg>
+          </button>
             <h1 class="recipe__title">
               <span>${label}</span>
             </h1>
@@ -93,6 +100,14 @@ class RecipeView {
   addSelectListener(listener) {
     window.addEventListener("hashchange", (e) => {
       e.preventDefault();
+      listener();
+    });
+  }
+
+  addBookmarkListener(listener) {
+    this.#parentElement.addEventListener("click", (e) => {
+      const btn = e.target.closest(".bookmark");
+      if (!btn) return;
       listener();
     });
   }
