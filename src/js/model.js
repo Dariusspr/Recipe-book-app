@@ -64,7 +64,9 @@ export function selectRecipe(id = null) {
   if (!id) {
     selectFirstRecipeOnPage();
   } else {
-    state.selectedRecipe = state.searchResults.find((res) => res.id === id);
+    state.selectedRecipe =
+      state.searchResults.find((res) => res.id === id) ??
+      state.bookmarks.find((res) => res.id === id);
   }
 }
 
@@ -82,9 +84,15 @@ export async function selectSearchResultsPage(page) {
   }
 }
 
+function saveBookmarks() {
+  console.log(state.bookmarks);
+  localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
+}
+
 export function addBookmark() {
   state.bookmarks.push(state.selectedRecipe);
   state.selectedRecipe.bookmarked = true;
+  saveBookmarks();
 }
 
 export function removeBookmark() {
@@ -92,6 +100,7 @@ export function removeBookmark() {
     (e) => e.id !== state.selectedRecipe.id
   );
   state.selectedRecipe.bookmarked = false;
+  saveBookmarks();
 }
 
 function updateState(url, data) {
@@ -150,3 +159,12 @@ function resetState() {
   state.currentSearchPageUrl = "";
   state.nextSearchPageUrl = "";
 }
+
+function getBookmarks() {
+  const data = localStorage.getItem("bookmarks");
+  if (data) {
+    state.bookmarks = JSON.parse(data);
+  }
+}
+
+getBookmarks();

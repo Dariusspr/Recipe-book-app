@@ -4,7 +4,6 @@ class RecipeView {
   #html;
   render(recipe) {
     if (!recipe) return;
-    console.log(recipe);
     this.#clear();
     this.#addFigure(recipe.bookmarked, recipe.image, recipe.label);
     this.#addDetails(recipe);
