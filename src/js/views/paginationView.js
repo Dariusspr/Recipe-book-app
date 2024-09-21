@@ -24,6 +24,7 @@ class PaginationView {
 
   render(currentPage, totalPages) {
     this.#clear();
+    this.#html = "";
     if (currentPage > 1 && currentPage < totalPages) {
       this.addPrevious(currentPage - 1);
       this.addNext(currentPage + 1);
@@ -37,7 +38,6 @@ class PaginationView {
   }
 
   #clear() {
-    this.#html = "";
     this.#parentElement.innerHTML = "";
   }
 

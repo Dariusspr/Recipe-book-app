@@ -2,7 +2,7 @@ import { RECIPES_PER_PAGE, FETCH_TIMEOUT_SEC } from "./constants";
 
 export const state = {
   searchResults: [],
-  currentSearchResults: [],
+  currentSearchResultsPage: [],
   currentPage: 1,
   totalSearchResultsCount: 0,
   itemsPerPage: RECIPES_PER_PAGE,
@@ -44,7 +44,7 @@ export async function searchRecipes(q) {
     }
 
     updateState(url, data);
-    loadSearchResultsPage();
+    loadCurrentSearchResultsPage();
   } catch (err) {
     throw err;
   }
@@ -78,14 +78,13 @@ export async function selectSearchResultsPage(page) {
     if (page >= currentPageCount && page < state.totalSearchResultsCount) {
       await fetchNextPage();
     }
-    loadSearchResultsPage(page);
+    loadCurrentSearchResultsPage(page);
   } catch (err) {
     throw err;
   }
 }
 
 function saveBookmarks() {
-  console.log(state.bookmarks);
   localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
 }
 
@@ -136,11 +135,11 @@ function extractIdFromLink(link) {
   return id;
 }
 
-function loadSearchResultsPage(page = 1) {
+function loadCurrentSearchResultsPage(page = 1) {
   state.currentPage = page;
   const start = (page - 1) * state.itemsPerPage;
   const end = start + state.itemsPerPage;
-  state.currentSearchResults = state.searchResults.slice(start, end);
+  state.currentSearchResultsPage = state.searchResults.slice(start, end);
 }
 
 function selectFirstRecipeOnPage() {
@@ -152,7 +151,7 @@ function selectFirstRecipeOnPage() {
 
 function resetState() {
   state.searchResults = [];
-  state.currentSearchResults = [];
+  state.currentSearchResultsPage = [];
   state.selectedRecipe = null;
   state.currentPage = 1;
   state.totalSearchResultsCount = 0;
@@ -167,4 +166,7 @@ function getBookmarks() {
   }
 }
 
-getBookmarks();
+function init() {
+  getBookmarks();
+}
+init();

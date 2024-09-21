@@ -16,14 +16,7 @@ async function controlSearch() {
 
     await Model.searchRecipes(Model.state.query);
 
-    SearchResultsView.render(Model.state.currentSearchResults);
-
-    PaginationView.render(
-      Model.state.currentPage,
-      Math.ceil(Model.state.totalSearchResultsCount / Model.state.itemsPerPage)
-    );
-
-    selectAndRenderRecipe();
+    renderSearchPage();
   } catch (err) {
     RecipeView.renderMessage();
     console.error(err.message);
@@ -34,7 +27,7 @@ async function controlRecipe() {
   const id = window.location.hash.slice(1);
   if (!id) return;
 
-  SearchResultsView.render(Model.state.currentSearchResults);
+  SearchResultsView.render(Model.state.currentSearchResultsPage);
 
   selectAndRenderRecipe(id);
 }
@@ -45,23 +38,11 @@ async function controlPagination(page) {
 
     await Model.selectSearchResultsPage(page);
 
-    SearchResultsView.render(Model.state.currentSearchResults);
-
-    PaginationView.render(
-      Model.state.currentPage,
-      Math.ceil(Model.state.totalSearchResultsCount / Model.state.itemsPerPage)
-    );
-
-    selectAndRenderRecipe();
+    renderSearchPage();
   } catch (err) {
     RecipeView.renderMessage();
     console.error(err.message);
   }
-}
-
-function selectAndRenderRecipe(id) {
-  Model.selectRecipe(id);
-  RecipeView.render(Model.state.selectedRecipe);
 }
 
 function controlBookmarks() {
@@ -72,6 +53,23 @@ function controlBookmarks() {
   }
   RecipeView.render(Model.state.selectedRecipe);
   BookmarkView.update(Model.state.bookmarks);
+}
+
+function getMaxPageCount() {
+  return Math.ceil(
+    Model.state.totalSearchResultsCount / Model.state.itemsPerPage
+  );
+}
+
+function renderSearchPage() {
+  SearchResultsView.render(Model.state.currentSearchResultsPage);
+  PaginationView.render(Model.state.currentPage, getMaxPageCount());
+  selectAndRenderRecipe();
+}
+
+function selectAndRenderRecipe(id) {
+  Model.selectRecipe(id);
+  RecipeView.render(Model.state.selectedRecipe);
 }
 
 function init() {
