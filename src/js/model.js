@@ -1,4 +1,4 @@
-import { RECIPES_PER_PAGE } from "./constants";
+import { RECIPES_PER_PAGE, FETCH_TIMEOUT_SEC } from "./constants";
 
 export const state = {
   searchResults: [],
@@ -14,16 +14,15 @@ export const state = {
 
 async function fetchJSON(url) {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_SEC * 1000),
+    });
     if (!response?.ok)
       throw new Error(`${response.message}: ${response.status}`);
 
     const json = await response.json();
     return json;
   } catch (err) {
-    console.log(err);
-
-    console.error(err);
     throw err;
   }
 }
@@ -39,16 +38,13 @@ export async function searchRecipes(q) {
       app_key: process.env.API_KEY,
     });
     const data = await fetchJSON(url);
-    if (!data || (data instanceof Array && data.length === 0)) {
-      console.info("No search results");
-      return;
+    if (!data || !data.count) {
+      throw new Error("No search results found.");
     }
 
     updateState(url, data);
     loadSearchResultsPage();
   } catch (err) {
-    console.log(err);
-
     throw err;
   }
 }
@@ -59,7 +55,6 @@ async function fetchNextPage() {
     const data = await fetchJSON(url);
     updateState(url, data);
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
@@ -123,9 +118,10 @@ function loadSearchResultsPage(page = 1) {
 }
 
 function selectFirstRecipeOnPage() {
+  if (state.searchResults.length == 0) return;
   const recipeIndex = state.itemsPerPage * (state.currentPage - 1);
   state.selectedRecipe = state.searchResults.at(recipeIndex);
-  window.location.hash = state.selectedRecipe.id;
+  window.location.hash = state.selectedRecipe.id ?? "";
 }
 
 function resetState() {

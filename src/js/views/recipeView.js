@@ -82,6 +82,14 @@ class RecipeView {
     this.#parentElement.insertAdjacentHTML("afterbegin", this.#html);
   }
 
+  renderMessage(msg = "No search results found.") {
+    this.#clear();
+    this.#html = `<div class="message">
+            <p>${msg}</p>
+          </div>`;
+    this.#parentElement.insertAdjacentHTML("afterbegin", this.#html);
+  }
+
   addSelectListener(listener) {
     window.addEventListener("hashchange", (e) => {
       e.preventDefault();

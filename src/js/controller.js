@@ -6,22 +6,27 @@ import RecipeView from "./views/recipeView";
 import PaginationView from "./views/paginationView";
 
 async function controlSearch() {
-  const query = SearchView.getSearchQuery();
-  if (!query) return;
-  Model.state.query = query;
+  try {
+    const query = SearchView.getSearchQuery();
+    if (!query) return;
+    Model.state.query = query;
 
-  RecipeView.renderLoadingAnimation();
+    RecipeView.renderLoadingAnimation();
 
-  await Model.searchRecipes(Model.state.query);
+    await Model.searchRecipes(Model.state.query);
 
-  SearchResultsView.render(Model.state.currentSearchResults);
+    SearchResultsView.render(Model.state.currentSearchResults);
 
-  PaginationView.render(
-    Model.state.currentPage,
-    Math.ceil(Model.state.totalSearchResultsCount / Model.state.itemsPerPage)
-  );
+    PaginationView.render(
+      Model.state.currentPage,
+      Math.ceil(Model.state.totalSearchResultsCount / Model.state.itemsPerPage)
+    );
 
-  selectAndRenderRecipe();
+    selectAndRenderRecipe();
+  } catch (err) {
+    RecipeView.renderMessage();
+    console.error(err.message);
+  }
 }
 
 async function controlRecipe() {
@@ -34,18 +39,23 @@ async function controlRecipe() {
 }
 
 async function controlPagination(page) {
-  RecipeView.renderLoadingAnimation();
+  try {
+    RecipeView.renderLoadingAnimation();
 
-  await Model.selectSearchResultsPage(page);
+    await Model.selectSearchResultsPage(page);
 
-  SearchResultsView.render(Model.state.currentSearchResults);
+    SearchResultsView.render(Model.state.currentSearchResults);
 
-  PaginationView.render(
-    Model.state.currentPage,
-    Math.ceil(Model.state.totalSearchResultsCount / Model.state.itemsPerPage)
-  );
+    PaginationView.render(
+      Model.state.currentPage,
+      Math.ceil(Model.state.totalSearchResultsCount / Model.state.itemsPerPage)
+    );
 
-  selectAndRenderRecipe();
+    selectAndRenderRecipe();
+  } catch (err) {
+    RecipeView.renderMessage();
+    console.error(err.message);
+  }
 }
 
 function selectAndRenderRecipe(id) {
